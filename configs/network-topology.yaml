@@ -1,0 +1,39 @@
+# network-topology.yaml
+# CY376 Red Team Project — Lab Network Configuration
+#
+# Documents the isolated virtual network topology used for all testing.
+# This is a reference/documentation file, not an executable config.
+
+hypervisor: VMware Fusion
+network_mode: "Private to my Mac"   # Host-only; no NAT, no bridge to physical NIC
+network_isolation: true
+internet_access: false
+host_machine: "Intel MacBook Pro (macOS)"
+
+virtual_machines:
+  - role: attacker
+    name: "Kali Linux 2026.2"
+    ip_address: 172.16.232.130
+    interface: eth0
+    tools_installed:
+      - nmap
+      - metasploit-framework
+
+  - role: target
+    name: "Metasploitable2"
+    ip_address: 172.16.232.131
+    interface: eth0
+    base_os: "Ubuntu 8.04 (kernel 2.6.24-16-server)"
+    notes: "Intentionally vulnerable training VM (Rapid7)"
+
+connectivity_verification:
+  method: ICMP echo (ping)
+  command: "ping -c 4 172.16.232.131"
+  result: "0% packet loss, confirmed reachable"
+
+isolation_notes: >
+  Both VMs were set to "Private to my Mac" network mode in VMware Fusion
+  BEFORE either machine was powered on. This ensures the target machine,
+  which contains multiple unauthenticated remote code execution
+  vulnerabilities, was never exposed to the host's physical network,
+  the home Wi-Fi, or the internet at any point during testing.
