@@ -1,0 +1,23 @@
+# OS junk
+.DS_Store
+
+# Credentials and secrets
+*.pem
+*.key
+credentials.txt
+secrets.txt
+*.env
+
+# Large capture files
+*.pcap
+*.pcapng
+
+# VM files (too large for git, not needed in repo)
+*.vmdk
+*.vmem
+*.nvram
+
+# Editor/IDE clutter
+.vscode/
+*.swp
+
